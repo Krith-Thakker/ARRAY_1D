@@ -1,1 +1,27 @@
+//CHOCOLATE DISTRIBUTION PROBLEM 
+#include<iostream>
+#include<algorithm>
+#include<climits>
+using namespace std;
+int chocolate_distribution(int arr[],int N,int m){
+  // step1 ) sabse pehle sort kardo array 
+  sort(arr,arr+N);
+  int min_difference = INT_MAX;
+  // step 2) i+m-1 matlab kyuki jo bhi hum element total dekhenge voh i se i+m-1 tak hi dekhenge at a particular instance
+  for(int i=0;i+m-1<N;i++){
+    int min = arr[i+m-1]-arr[i];
+    // step 3) question ke according hume yeh batana he ki minimum difference kya he at an instance min element and max element uss instance par 
+    if(min<min_difference){
+      min_difference = min;
+    }
+  }
+  return min_difference;
+  
+}
 
+int main(){
+  int arr[]={7,3,2,4,9,12,56};
+  int N = sizeof(arr)/sizeof(arr[0]);
+  int m =3;
+  cout<<chocolate_distribution(arr,N,m);
+}
