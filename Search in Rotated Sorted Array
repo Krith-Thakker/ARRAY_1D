@@ -1,1 +1,63 @@
+#include<iostream>
+using namespace std;
 
+// SEARCH IN ROTATED ARRAY
+
+// yaha start aur end ko mat use karo kyuki unki value change hoti rahegi isliye it is better to use 0 and N-1 instead of them 
+int getPivot(int arr[], int N) {
+    // step 1)
+    // ek function bhanao jo pivot element ko find kare
+    // basically pivot element kisi bhi array ka lowest element he 
+    int start = 0;
+    int end = N - 1;
+    
+    // mid bahar define mat karo kyuki uski value hume har iteration par chahiye recalculate karke isliye loop ke andar banao
+    // int mid = start + (end - start) / 2;
+
+// hum tab tak iterate karenge jab tak start = end na ho
+    
+    while (start < end) {
+        int mid = start + (end - start) / 2;
+        // 0th index se badi value he matlab uppar side he and agar choti he matlab neeche wali side he
+        if (arr[mid] >= arr[0]) {
+            start = mid + 1;
+        } else {
+            end = mid;
+        }
+       
+    }
+    return start;
+}
+
+// step2)
+// ab binary search lagayenge 
+
+int binarySearch(int arr[], int target, int start, int end) {
+    
+    while (start <= end) {
+        int mid = start + (end - start) / 2;
+        if (arr[mid] == target) {
+            return mid;
+        } else if (arr[mid] > target) {
+            end = mid - 1;
+        } else {
+            start = mid + 1;
+        }
+        
+    }
+    return -1;
+}
+// step 3)
+// ab search kardo either uppar wale region me or neeche wale region me 
+
+int search_rotatedArray(int arr[], int N, int target) {
+    int index = -1;
+    int pivotElement = getPivot(arr, N);
+
+    if (target >= arr[pivotElement] && target <= arr[N - 1]) {
+        index = binarySearch(arr, target, pivotElement, N - 1);
+    } else {
+        index = binarySearch(arr, target, 0, pivotElement - 1);
+    }
+    return index;
+}
