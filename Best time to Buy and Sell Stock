@@ -1,1 +1,22 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<climits>
+using namespace std;
+int maxProfit(vector<int> &prices) {
+  // step 1)
+    int maxProfit = 0;
+    int buy = INT_MAX;
+    for(int i = 0; i < prices.size(); i++){
+      // hum maximum par sell karne ki approach lagayenge and traverse ki har kisi element ko jab sell kiya toh voh maximum profit ke liye unse pehle minimum element konsa tha usko find karne ke liye min function use karenge taaki sabse smallest buy ki cost mil jaye usse pehle 
+        buy = min(buy, prices[i]);
+      // ab profit calculate karenge uss min element and current element ka and agar voh maxprofit se zyada aaya toh maxprofit ko profit ke equal kar denge 
+        maxProfit = max(maxProfit, prices[i] - buy);
+    }
+    return maxProfit;
+}
+int main(){
+  vector<int> prices={7,1,5,3,6,4};
 
+  cout<<maxProfit(prices);
+}
