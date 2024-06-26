@@ -1,1 +1,46 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+int trap(vector<int>& height) {
+    int N = height.size();
+    int max_left = height[0];
+    int max_right = height[N-1];
+    int current_left = 1;
+    int current_right = N-2;
+    int water = 0;
+    // step1)
+// sabse pehle current left and current right nikalo and fir maximum left and maximum right element nikalo 
 
+   //  jab tak current_left less than or equal to current_right he toh loop chalao and agar current_left element greater than maximum left element he toh maximumleft element ko update karo
+   // aur current left element ko +1 se increase karo and agar aisa na ho toh current right element ko bhi check karo , yahi same cheez current right ke saath bhi karo  
+    while(current_left <= current_right)
+    {
+        if(height[current_left] >= max_left)
+        {
+            max_left = height[current_left];
+            current_left++;
+        }
+        else if(height[current_right] >= max_right)
+        {
+            max_right = height[current_right];
+            current_right--;
+        }
+      // step2)  
+            
+        // at last bas yeh karo ki kya maximum left element less than or equal to max_right element he aur current_left element less than maximum left element he toh 
+            // water ko increase karo difference of maximum left and current left element se and currentleft ko ek se bada do.
+        else if(max_left <= max_right && height[current_left] < max_left)
+        {
+            water += max_left - height[current_left];
+            current_left++;
+        }
+        else
+        {
+            // warna yehi same cheez right element ke liye bhi kardo 
+            water += max_right - height[current_right];
+            current_right--;
+        }
+
+    }
+    return water;
+}
