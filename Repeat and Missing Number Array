@@ -1,4 +1,5 @@
-// repeating and missing element in the array 
+ // repeating and missing element in the array 
+//easy but extra space le raha he 
 #include<iostream>
 #include<vector>
 using namespace std;
@@ -23,4 +24,45 @@ int main(){
   int arr[]={5,5,3,6,2,1};
   int N = sizeof(arr)/sizeof(arr[0]);
   miss_double(arr,N);
+}
+//*************************************************************************************************************************************************************
+//without extra space 
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void findRepeatingAndMissing(const vector<int>& arr) {
+    int n = arr.size();
+    
+    // Calculate the expected sum and sum of squares
+    int sum_n = (n * (n + 1)) / 2;
+    int sum_n_sq = (n * (n + 1) * (2 * n + 1)) / 6;
+    
+    // Calculate the actual sum and sum of squares
+    int sum_actual = 0;
+    int sum_actual_sq = 0;
+    
+    for (int i = 0; i < n; ++i) {
+        sum_actual += arr[i];
+        sum_actual_sq += arr[i] * arr[i];
+    }
+    
+    // Calculate the differences
+    int sum_diff = sum_actual - sum_n; // A - B
+    int sum_sq_diff = sum_actual_sq - sum_n_sq; // A^2 - B^2
+    
+    // Solving the equations
+    int sum_AB = sum_sq_diff / sum_diff; // A + B
+    
+    int A = (sum_diff + sum_AB) / 2;
+    int B = sum_AB - A;
+    
+    cout << "Repeating number: " << A << endl;
+    cout << "Missing number: " << B << endl;
+}
+
+int main() {
+    vector<int> arr = {4, 3, 6, 2, 1, 1}; // Example array
+    findRepeatingAndMissing(arr);
+    return 0;
 }
