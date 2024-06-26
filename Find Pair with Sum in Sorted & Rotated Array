@@ -1,1 +1,54 @@
+#include <iostream>
+using namespace std;
 
+// Function to find the pivot in a rotated sorted array
+int getPivot(int arr[], int N) {
+    int start = 0;
+    int end = N - 1;
+    while (start < end) {
+        int mid = start + (end - start) / 2;
+        if (arr[mid] > arr[end]) {
+            start = mid + 1;
+        } else {
+            end = mid;
+        }
+    }
+    return start;
+}
+
+// Function to find if there is a pair with a given sum in a rotated sorted array
+void pair_sum(int arr[], int N, int target) {
+    int pivot_element = getPivot(arr, N);
+    int start = pivot_element;        // Smallest element index
+    int end = (pivot_element - 1 ); // Largest element index
+
+    // Loop to find the pair with the given sum
+    while (start != end) {
+        int currentSum = arr[start] + arr[end];
+
+        if (currentSum == target) {
+            cout << "true" << endl;
+            return;
+        }
+        if (currentSum < target) {
+            start++;
+            if (start == N) {
+                start = 0; // Wrap around to the start of the array
+            }
+        } else {
+            end--;
+            if (end == -1) {
+                end = N - 1; // Wrap around to the end of the array
+            }
+        }
+    }
+    cout << "false" << endl;
+}
+
+int main() {
+    int arr[] = {11, 15, 6, 8, 9, 10};
+    int N = sizeof(arr) / sizeof(arr[0]);
+    int target = 16;
+    pair_sum(arr, N, target);
+    return 0;
+}
