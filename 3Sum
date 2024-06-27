@@ -1,29 +1,42 @@
-#include<iostream>
-#include<vector>
-#include<algorithm>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
 using namespace std;
-vector<vector<int>> threeSum(vector<int> v){
-  vector<vector<int>> ans ;
-  sort(v.begin(),v.end());
-for(int i=0;i<v.size();i++){
-  int j=i+1;
-  int k= v.size()-1;
-  while(j<k){
-    int sum = v[j]+v[k];
-    if(sum==v[i]){
-      // v.push_back()
-      vector<int> triplet={v[i],v[j],v[k]};
-      ans.push_back(triplet);
+
+vector<vector<int>> threeSum(vector<int> v) {
+    vector<vector<int>> ans;
+    sort(v.begin(), v.end());
+//sabse pehle trsverse karo and check karo ki ith jth and kth element equal to zero he ya nahi 
+    for (int i = 0; i < v.size(); i++) {
+        // Skip duplicate elements
+//ek baar yeh check karlo ki kahi ek hi element wapis na aaya ho
+        if (i > 0 && v[i] == v[i-1]) continue;
+
+        int j = i + 1;
+        int k = v.size() - 1;
+
+        while (j < k) {
+            int sum = v[i] + v[j] + v[k];
+            if (sum == 0) {
+                ans.push_back({v[i], v[j], v[k]});
+                j++;
+                k--;
+                // Skip duplicate elements
+//wapis duplicate element check karenge j th and kth ke liye bhi
+//and yeh dekhna ki kahi j previous case wale j ke hi equal toh nahi ya fir k previous case wale k  ke equal oth nahi isliye previous case valon se compare karne
+//ke liye hum j ko j-1 and k ko k+! se compare karete he 
+                while (j < k && v[j] == v[j-1]){ j++;}
+                while (j < k && v[k] == v[k+1]) {k--;}
+            } else if (sum < 0) {
+                j++;
+            } else {
+                k--;
+            }
+        }
     }
-    else if(sum<v[i]){
-      j++;
-    }
-    else{
-      k--;
-    }
-  }
-  while (i + 1 < v.size() && v[i + 1] == v[i]) 
-    i++;
+    return ans;
 }
-  return ans;
-}
+
+
+
