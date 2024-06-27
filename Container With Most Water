@@ -1,1 +1,23 @@
-
+#include<iostream>
+#include<vector>
+#include<climits>
+using namespace std;
+int maxArea(vector<int> height){
+  int start =0;
+  int end = height.size()-1;
+  int max_area = INT_MIN;
+  while(start<=end){
+    int side = min(height[start],height[end]);
+    int area = side*(end-start);
+    if(max_area<area){
+      max_area =area;
+    }
+    if(height[start]<=height[end]){
+      start++;
+    }
+    else if(height[start]>height[end]){
+      end--;
+    }
+  }
+  return max_area;
+}
